@@ -1,18 +1,18 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-[contributors-shield]: https://img.shields.io/github/contributors/hassan7303/laravel-small-shop.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/hassan7303/laravel-small-shop.svg?style=for-the-badge&color=1d9921
 [contributors-url]: https://github.com/hassan7303/laravel-small-shop/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/hassan7303/laravel-small-shop.svg?style=for-the-badge&label=Fork
+[forks-shield]: https://img.shields.io/github/forks/hassan7303/laravel-small-shop.svg?style=for-the-badge&label=Fork&color=blue
 [forks-url]: https://github.com/hassan7303/laravel-small-shop/network/members
-[stars-shield]: https://img.shields.io/github/stars/hassan7303/laravel-small-shop.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/hassan7303/laravel-small-shop.svg?style=for-the-badge&color=yellow
 [stars-url]: https://github.com/hassan7303/laravel-small-shop/stargazers
-[license-shield]: https://img.shields.io/github/license/hassan7303/laravel-small-shop.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/hassan7303/laravel-small-shop.svg?style=for-the-badge&colorB=1d9921
 [license-url]: https://github.com/hassan7303/laravel-small-shop/blob/master/LICENSE.md
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-blue.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-blue.svg?style=for-the-badge&logo=linkedin&colorB=003ec3
 [linkedin-url]: https://www.linkedin.com/in/hassan-ali-askari-280bb530a/
-[telegram-shield]: https://img.shields.io/badge/-Telegram-blue.svg?style=for-the-badge&logo=telegram&colorB=555
+[telegram-shield]: https://img.shields.io/badge/-Telegram-blue.svg?style=for-the-badge&logo=telegram&logoColor=white&colorB=245ec9
 [telegram-url]: https://t.me/hassan7303
-[instagram-shield]: https://img.shields.io/badge/-Instagram-red.svg?style=for-the-badge&logo=instagram&colorB=555
+[instagram-shield]: https://img.shields.io/badge/-Instagram-833AB4.svg?style=for-the-badge&logo=instagram&colorB=FD1D1D
 [instagram-url]: https://www.instagram.com/hasan_ali_askari
 [github-shield]: https://img.shields.io/badge/-GitHub-black.svg?style=for-the-badge&logo=github&colorB=555
 [github-url]: https://github.com/hassan7303
