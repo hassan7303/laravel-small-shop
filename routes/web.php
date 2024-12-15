@@ -16,61 +16,65 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::prefix('v1')->group(function () {
 
-    /** User Routes **/
-    route::get('/sign-in', [HomeController::class, 'UserLogout'])->name('sign-in');
-    route::get('/sign-up', [HomeController::class, 'UserLogout'])->name('sign-up');
-    route::get('/logout', [HomeController::class, 'UserLogout'])->name('logout');
-    Route::get('/update-password', [HomeController::class, 'UpdatePassword']);
+    /** Public Routes (User) **/
 
-    // Search
-    Route::get('/search-a-product', [HomeController::class, 'SearchProduct']);
+    // Home
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    // Pages
-    Route::prefix('pages')->group(function () {
-        route::get('/', [HomeController::class, 'index']);
-        route::get('/my-account', [HomeController::class, 'UserAccount'])->name('user.account');
-        Route::get('/shop', [HomeController::class, 'ShopPage'])->name('user.shop');
-        Route::get('/product_details/{id}', [HomeController::class, 'ProductDetails']);
-        Route::get('/contact', [HomeController::class, 'ContactPage'])->name('user.contact');
-    });
+    // Products
+    Route::get('/products', [HomeController::class, 'products'])->name('products.index');
+    Route::get('/products/{id}', [HomeController::class, 'productDetails'])->name('products.show');
 
-    // Cart Routes
-    Route::prefix('cart')->group(function () {
-        Route::get('/', [HomeController::class, 'cartPage'])->name('user.cart');
-        Route::post('/add/{id}', [HomeController::class, 'addToCart'])->name('cart.add');
-        Route::get('/remove/{id}', [HomeController::class, 'removeProductFromCart'])->name('cart.remove');
-        Route::get('/clear', [HomeController::class, 'clearCart'])->name('cart.clear');
-    });
-
-    // Order
-    Route::prefix('orders')->group(function () {
-        Route::get('/', [HomeController::class, 'userOrders'])->name('user.orders');
-        Route::get('/{id}', [HomeController::class, 'orderReceived'])->name('order.received');
-        Route::get('/cancel/{id}', [HomeController::class, 'cancelOrder'])->name('order.cancel');
-        Route::get('/checkout', [HomeController::class, 'checkout'])->name('user.checkout');
-    });
+    // Cart
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    
+    // Login & Register
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    
+    // Contact
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 
     /** Admin Routes **/
-    Route::prefix('admin')->group(function () {
-        // Products
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {    
+
+        // Admin Dashboard
+        Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
+        // Products Management
         Route::prefix('products')->group(function () {
-            Route::get('/', [ProductController::class, 'index']);
-            Route::post('/', [ProductController::class, 'store']);
-            Route::put('/{id}', [ProductController::class, 'update']);
-            Route::delete('/{id}', [ProductController::class, 'destroy']);
+            Route::get('/', [ProductController::class, 'index'])->name('admin.products.index');
+            Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
+            Route::post('/', [ProductController::class, 'store'])->name('admin.products.store');
+            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+            Route::put('/{id}', [ProductController::class, 'update'])->name('admin.products.update');
+            Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         });
-        // Orders
+    
+        // Order Management
         Route::prefix('orders')->group(function () {
-            Route::get('/', [OrderController::class, 'index']);
-            Route::get('/{id}', [OrderController::class, 'show']);
-            Route::put('/{id}', [OrderController::class, 'update']);
-            Route::delete('/{id}', [OrderController::class, 'destroy']);
+            Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
+            Route::get('/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
+            Route::put('/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
+            Route::delete('/{id}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+        });
+    
+        // User Management
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
+            Route::get('/{id}', [UserController::class, 'show'])->name('admin.users.show');
+            Route::delete('/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
         });
     });
 });
