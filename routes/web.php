@@ -3,6 +3,11 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,7 +62,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.products.index');
             Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
             Route::post('/', [ProductController::class, 'store'])->name('admin.products.store');
-            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+            Route::get('/{id}/form-edit', [ProductController::class, 'formEdit'])->name('admin.products.formEdit');
             Route::put('/{id}', [ProductController::class, 'update'])->name('admin.products.update');
             Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         });
