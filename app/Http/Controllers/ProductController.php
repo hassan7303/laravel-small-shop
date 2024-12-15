@@ -2,43 +2,104 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\ProductResource;
+use App\Http\Requests\UpdateProduct;
+use Illuminate\Contracts\View\View;
+use App\Http\Requests\StoreProduct;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
     /**
-     * @return void
+     * Show all products
+     * 
+     * @return ResourceCollection
      */
-    public function index(): void
+    public function index():ResourceCollection
     {
-        // متد برای دریافت لیست محصولات
+        return ProductResource::collection(Product::all());
     }
 
     /**
-     * @param  Request  $request
-     * @return void
-     */
-    public function store(Request $request): void
-    {
-        // متد برای افزودن محصول جدید
-    }
-
-    /**
+     * Show product by id
+     * 
      * @param  Request  $request
      * @param  int  $id
-     * @return void
+     * 
+     * @return ProductResource
      */
-    public function update(Request $request, int $id): void
+    public function show(Request $request, int $id):ProductResource
     {
-        // متد برای ویرایش محصول
+        return new ProductResource(Product::findOrFail($id));
+    }
+
+
+    /**
+     * store product.
+     * 
+     * @param  Request  $request
+     * 
+     * @return JsonResponse
+     */
+    public function store(StoreProduct $request): JsonResponse
+    {
+       $product = Product::create($request->validated());
+
+        return response()->json([
+            'message' => "محصول با موفقیت ایجاد شد.",
+            'data' => new ProductResource($product)
+        ], 201);
+    }
+    
+    /**
+     * form Edit product.
+     * 
+     * @param  int  $id
+     * 
+     * @return View
+     */
+    public function formEdit($id):View
+    {
+        $product = Product::findOrFail($id);
+
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
+     * update product by id.
+     * 
+     * @param  Request  $request
      * @param  int  $id
-     * @return void
+     * 
+     * @return JsonResponse
      */
-    public function destroy(int $id): void
+    public function update(UpdateProduct $request, int $id): JsonResponse
     {
-        // متد برای حذف محصول
+        $product = Product::findOrFail($id);
+        $product->update($request->validated());
+        
+        return response()->json([
+            'message' => "محصول با شناسه {$id} با موفقیت به‌روزرسانی شد.",
+            'data' => new ProductResource($product)
+        ], 200);
+    }
+
+    /**
+     * delete product by id.
+     * 
+     * @param  int  $id
+     * 
+     * @return JsonResponse
+     */
+    public function destroy(int $id):JsonResponse
+    {
+        Product::findOrFail($id)->delete();
+
+        return response()->json([
+            'message' => "محصول با شناسه {$id} با موفقیت حذف شد."
+        ], 200);
     }
 }
