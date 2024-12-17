@@ -4,27 +4,70 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Exceptions\SomeCustomException;
+use App\Exceptions\InvalidTaxonomyTypeInCollectionException;
+
 
 class Handler extends ExceptionHandler
 {
     /**
-     * The list of the inputs that are never flashed to the session on validation exceptions.
+     * A list of the exception types that should not be reported.
      *
-     * @var array<int, string>
+     * @var array
      */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
+    protected $dontReport = [
+        AuthorizationException::class,
+        HttpException::class,
+        ModelNotFoundException::class,
+        ValidationException::class,
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
+     * Report or log an exception.
+     *
+     * @param  Throwable  $exception
+     * @return void
+     *
+     * @throws Exception
      */
-    public function register(): void
+    public function report(Throwable $exception)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($exception instanceof SomeCustomException) {
+            Log::error("Custom Error: " . $exception->getMessage());
+        }
+
+        Log::error($exception);
+
+        parent::report($exception);
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  Request  $request
+     * @param  Throwable  $exception
+     * @return Response|JsonResponse
+     *
+     * @throws Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof InvalidTaxonomyTypeInCollectionException) {
+            return response()->json([
+                'error' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+            ], $exception->getCode());
+        }
+
+        return parent::render($request, $exception);
     }
 }
