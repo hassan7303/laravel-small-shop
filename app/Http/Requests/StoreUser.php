@@ -36,7 +36,6 @@ class StoreUser extends FormRequest
      */
     public function messages():array 
     {
-        //پیام فارسی برای ذخیره کاربر 
         return [
             'name.required' => 'نام الزامی است',
             'name.max' => 'نام حداکثر 255 کاراکتر می باشد',

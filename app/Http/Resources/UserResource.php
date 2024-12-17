@@ -10,7 +10,7 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      * 
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      *
      * @return array 
      */
