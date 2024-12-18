@@ -36,6 +36,17 @@ class ProductController extends Controller
         return new ProductResource(Product::findOrFail($id));
     }
 
+    /**
+     * Create Product Form
+     * 
+     * @return View
+     */
+    public function formCreate():View
+    {
+        dd("create product");
+        // return view('products.create');
+    }
+
 
     /**
      * store product.
@@ -44,9 +55,10 @@ class ProductController extends Controller
      * 
      * @return JsonResponse
      */
-    public function store(StoreProduct $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-       $product = Product::create($request->validated());
+        // dd($request);
+       $product = Product::create($request->all());
 
         return response()->json([
             'message' => "محصول با موفقیت ایجاد شد.",
@@ -63,6 +75,7 @@ class ProductController extends Controller
      */
     public function formEdit($id):View
     {
+        dd("edit product");
         $product = Product::findOrFail($id);
 
         return view('admin.products.edit', compact('product'));
@@ -78,6 +91,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProduct $request, int $id): JsonResponse
     {
+        dd("update product");
         $product = Product::findOrFail($id);
         $product->update($request->validated());
         
