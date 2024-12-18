@@ -50,4 +50,14 @@ class AdminController extends Controller
     {
         // متد برای حذف سفارش
     }
+
+    /**
+     * get Addmin Dashboard
+     * 
+     * @return void
+     */
+    public function dashboard():void
+    {
+        dd("dashboard");
+    }
 }
