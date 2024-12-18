@@ -52,7 +52,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 
     /** Admin Routes **/
-    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {    
+    // Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {    
+    Route::prefix('admin')->group(function () {    
 
         // Admin Dashboard
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -60,9 +61,9 @@ Route::prefix('v1')->group(function () {
         // Products Management
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.products.index');
-            Route::get('/create', [ProductController::class, 'create'])->name('admin.products.create');
+            Route::get('/form-create', [ProductController::class, 'formCreate'])->name('admin.products.create');
             Route::post('/', [ProductController::class, 'store'])->name('admin.products.store');
-            Route::get('/{id}/form-edit', [ProductController::class, 'formEdit'])->name('admin.products.formEdit');
+            Route::get('/form-edit/{id}', [ProductController::class, 'formEdit'])->name('admin.products.formEdit');
             Route::put('/{id}', [ProductController::class, 'update'])->name('admin.products.update');
             Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         });
