@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -61,13 +64,25 @@ class HomeController extends Controller
     }
 
     /**
+     * Show all products
+     * 
+     * @return ResourceCollection
+     */
+    public function products():ResourceCollection
+    {
+        return ProductResource::collection(Product::all());
+    }
+
+    /**
      * Display the details of a specific product.
      *
      * @param  int  $id  The ID of the product.
-     * @return void
+     * 
+     * @return ProductResource
      */
-    public function ProductDetails($id):void {
-        dd("1111");
+    public function ProductDetails($id):ProductResource
+    {
+        return new ProductResource(Product::findOrFail($id));
     }
 
     /**
