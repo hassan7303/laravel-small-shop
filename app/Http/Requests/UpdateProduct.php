@@ -13,7 +13,7 @@ class UpdateProduct extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,10 @@ class UpdateProduct extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'somtime|nallable|string|max:255',
-            'description' => 'somtime|nallable|string|max:255',
-            'price' => 'somtime|nallable|numeric',
-            'image' => 'somtime|nallable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'sometimes|nullable|string|max:255',
+            'description' => 'sometimes|nullable|string|max:255',
+            'price' => 'sometimes|nullable|numeric',
+            'image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
