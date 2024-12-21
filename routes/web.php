@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,6 +67,16 @@ Route::prefix('v1')->group(function () {
             Route::get('/form-edit/{id}', [ProductController::class, 'formEdit'])->name('admin.products.formEdit');
             Route::put('/{id}', [ProductController::class, 'update'])->name('admin.products.update');
             Route::delete('/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+        });
+
+        // category Management
+        Route::prefix('category')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('admin.category.index');
+            Route::get('/form-create', [CategoryController::class, 'formCreate'])->name('admin.category.create');
+            Route::post('/', [CategoryController::class, 'store'])->name('admin.category.store');
+            Route::get('/form-edit/{id}', [CategoryController::class, 'formEdit'])->name('admin.category.formEdit');
+            Route::put('/{id}', [CategoryController::class, 'update'])->name('admin.category.update');
+            Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
         });
     
         // Order Management
